@@ -1,0 +1,21 @@
+/* Scoped to Blue Holidays admin pages only (body.app-core) - does not affect Users/Groups. */
+
+body.app-core .card-header .card-title {
+    font-size: 0.85rem;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 1.5;
+    background: #eaf5fb;
+    border-left: 3px solid #087ebd;
+    padding: 10px 14px;
+    border-radius: 4px;
+    color: #08405c;
+    white-space: normal;
+}
+
+body.app-core div[class="help-block"] {
+    font-size: 0.78rem;
+    color: #087ebd;
+    margin-top: 4px;
+    line-height: 1.4;
+}

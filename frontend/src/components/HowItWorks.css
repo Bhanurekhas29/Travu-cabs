@@ -1,0 +1,99 @@
+.how-it-works {
+  padding: 32px 0;
+  background: var(--color-white);
+}
+
+.how-it-works__heading {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto 40px;
+}
+
+.how-it-works__eyebrow {
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  margin-bottom: 8px;
+}
+
+.how-it-works__heading h2 {
+  font-size: 1.8rem;
+}
+
+/* Hairline-divider grid: the container's border-color background shows
+   through the 1px gaps between cards, giving thin dividers without
+   needing per-card border-right rules. */
+.how-it-works__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1px;
+  background: var(--color-border);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.how-it-works__card {
+  background: var(--color-white);
+  padding: 32px;
+}
+
+.how-it-works__step-label {
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  margin-bottom: 16px;
+}
+
+.how-it-works__image {
+  width: 100%;
+  height: 192px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--color-bg-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-accent-orange);
+  margin-bottom: 20px;
+}
+
+.how-it-works__image .material-icons {
+  font-size: 48px;
+}
+
+.how-it-works__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.how-it-works__title {
+  font-size: 1.15rem;
+  margin-bottom: 6px;
+}
+
+.how-it-works__description {
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+@media (min-width: 768px) {
+  .how-it-works__heading h2 {
+    font-size: 2.2rem;
+  }
+
+  .how-it-works__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .how-it-works__card {
+    padding: 40px;
+  }
+}

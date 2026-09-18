@@ -1,0 +1,130 @@
+.hero {
+  position: relative;
+  background: linear-gradient(135deg, var(--color-navy) 0%, var(--color-blue-dark) 60%, var(--color-blue) 100%);
+  color: var(--color-white);
+  padding: 56px 0 64px;
+  overflow: hidden;
+}
+
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  /* Slow continuous "expanding" zoom (Ken Burns effect) - always runs,
+     whether there's one hero photo or two. */
+  animation: hero-zoom 18s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+/* Two-image crossfade: both layers share the same 10s linear cycle, but
+   B plays in reverse so they're always fading opposite each other. The
+   zoom animation runs alongside the crossfade on each layer. */
+.hero__bg--fade-a {
+  animation: hero-zoom 18s ease-in-out infinite alternate, hero-crossfade 10s linear infinite alternate;
+}
+
+.hero__bg--fade-b {
+  animation: hero-zoom 18s ease-in-out infinite alternate, hero-crossfade 10s linear infinite alternate-reverse;
+}
+
+@keyframes hero-crossfade {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes hero-zoom {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__bg,
+  .hero__bg--fade-a,
+  .hero__bg--fade-b {
+    animation: none;
+  }
+}
+
+.hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(2, 23, 69, 0.55);
+}
+
+/* .hero__inner intentionally has no width/margin overrides here - it relies
+   entirely on the shared .container class so it stays perfectly aligned
+   with the header and booking-form card at every viewport width. Text
+   readability on very wide screens is capped on the heading/subtext
+   elements themselves instead. */
+.hero__inner {
+  position: relative;
+  z-index: 1;
+}
+
+.hero__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+  opacity: 0.85;
+  margin-bottom: 12px;
+}
+
+.hero__eyebrow-line {
+  display: inline-block;
+  width: 28px;
+  height: 2px;
+  background: var(--color-accent-orange);
+}
+
+.hero__heading {
+  font-size: 2.4rem;
+  line-height: 1.15;
+  font-weight: 800;
+  color: var(--color-white);
+  max-width: 640px;
+}
+
+.hero__heading-highlight {
+  color: var(--color-accent-orange);
+}
+
+.hero__subtext {
+  margin-top: 18px;
+  font-size: 1rem;
+  line-height: 1.6;
+  opacity: 0.92;
+  max-width: 460px;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 28px;
+}
+
+@media (min-width: 768px) {
+  .hero {
+    padding: 90px 0 110px;
+  }
+
+  .hero__heading {
+    font-size: 72px;
+  }
+
+  .hero__subtext {
+    font-size: 1.1rem;
+  }
+}

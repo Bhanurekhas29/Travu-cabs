@@ -1,0 +1,80 @@
+.floating-actions {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.floating-actions__btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  color: var(--color-white);
+  box-shadow: 0 8px 20px rgba(2, 23, 69, 0.25);
+  transition: transform 0.15s ease;
+}
+
+.floating-actions__btn:hover {
+  transform: translateY(-3px) scale(1.05);
+}
+
+.floating-actions__btn--whatsapp {
+  background: #25d366;
+}
+
+.floating-actions__btn--call {
+  background: var(--color-primary);
+}
+
+.floating-actions__btn--email {
+  background: var(--color-blue);
+}
+
+/* Pulsing ring behind the call button, drawing the eye to it */
+.floating-actions__pulse {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--color-primary);
+  opacity: 0.6;
+  animation: floating-pulse 2s ease-out infinite;
+  z-index: -1;
+}
+
+@keyframes floating-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  100% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .floating-actions__pulse {
+    animation: none;
+    display: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .floating-actions {
+    right: 28px;
+    bottom: 28px;
+    gap: 14px;
+  }
+
+  .floating-actions__btn {
+    width: 56px;
+    height: 56px;
+  }
+}

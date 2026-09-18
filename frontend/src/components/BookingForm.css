@@ -1,0 +1,322 @@
+.booking-form {
+  margin-top: -40px;
+  padding-bottom: 24px;
+  position: relative;
+  z-index: 2;
+}
+
+.booking-form__card {
+  background: rgba(255, 255, 255, 0.76);
+  border-radius: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.72);
+  box-shadow: 0px 24px 70px 0px rgba(36, 36, 36, 0.18);
+  backdrop-filter: blur(44px);
+  -webkit-backdrop-filter: blur(44px);
+  margin-left: calc(-1 * var(--gutter));
+  margin-right: calc(-1 * var(--gutter));
+  /* Vertical padding matches the design spec (28px); horizontal padding
+     stays tied to --gutter so card text keeps lining up with the hero
+     heading and logo above it. */
+  padding: 28px var(--gutter);
+}
+
+.booking-form__header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+
+.booking-form__eyebrow {
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--color-accent-orange);
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.booking-form__title {
+  font-size: 1.4rem;
+}
+
+.booking-form__microcopy {
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+
+.booking-form__row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.form-field label {
+  font-family: var(--font-heading);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: #4b5563;
+}
+
+.form-field input {
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: 0.95rem;
+  color: var(--color-text);
+  width: 100%;
+  background: var(--color-white);
+}
+
+.form-field input:focus {
+  outline: 2px solid var(--color-blue);
+  outline-offset: 1px;
+}
+
+.form-field__error {
+  font-size: 0.78rem;
+  color: var(--color-primary);
+}
+
+/* Icon-in-input (pickup/drop location, date, time, name) */
+.input-with-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-with-icon .material-icons {
+  position: absolute;
+  left: 12px;
+  font-size: 20px;
+  color: var(--color-primary);
+  pointer-events: none;
+}
+
+.input-with-icon input {
+  padding-left: 40px;
+}
+
+/* Mobile number "+91" prefix */
+.input-with-prefix {
+  display: flex;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--color-white);
+}
+
+.input-with-prefix__prefix {
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-navy);
+  background: var(--color-bg-muted);
+  border-right: 1px solid var(--color-border);
+}
+
+.input-with-prefix input {
+  border: none;
+  border-radius: 0;
+  flex: 1;
+  min-width: 0;
+}
+
+.input-with-prefix input:focus {
+  outline: none;
+}
+
+.booking-form__trip-type {
+  display: flex;
+  gap: 10px;
+}
+
+.booking-form__trip-type button {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  background: var(--color-white);
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--color-navy);
+}
+
+.booking-form__trip-type button.is-active {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+.booking-form__stepper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 6px 10px;
+  background: var(--color-white);
+}
+
+.booking-form__stepper button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--color-border);
+  background: var(--color-white);
+  color: var(--color-accent-orange);
+}
+
+.booking-form__stepper span {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.booking-form__vehicle-field {
+  grid-column: 1 / -1;
+}
+
+.booking-form__vehicles {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+}
+
+.booking-form__vehicles button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 4px;
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  background: var(--color-white);
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--color-navy);
+  min-width: 0;
+}
+
+.booking-form__vehicles button.is-active {
+  border-color: var(--color-blue);
+  background: #eaf5fb;
+  color: var(--color-blue);
+}
+
+.booking-form__vehicle-thumb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 44px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--color-bg-muted);
+  color: var(--color-accent-orange);
+}
+
+.booking-form__vehicle-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.booking-form__vehicle-label {
+  text-align: center;
+}
+
+.booking-form__final-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.booking-form__submit {
+  width: 100%;
+  margin-top: 0;
+  height: fit-content;
+  flex: 1;
+}
+
+.booking-form__submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.booking-form__success {
+  background: #e9f9ef;
+  color: #1e7a3d;
+  padding: 12px 14px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.booking-form__submit-error {
+  background: #fdeceb;
+  color: var(--color-primary);
+  padding: 12px 14px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+@media (min-width: 768px) {
+  .booking-form {
+    margin-top: -60px;
+  }
+
+  .booking-form__card {
+    padding: 28px var(--gutter);
+  }
+
+  .booking-form__row--triple {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .booking-form__row--mixed {
+    grid-template-columns: 1.1fr 1.2fr 1.2fr;
+    align-items: start;
+  }
+
+  .booking-form__vehicle-field {
+    grid-column: auto;
+  }
+
+  .booking-form__row--final {
+    grid-template-columns: 1fr 1.6fr;
+    align-items: end;
+  }
+
+  .booking-form__final-actions {
+    flex-direction: row;
+    margin-bottom: 16px;
+  }
+
+  .booking-form__header {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .booking-form__microcopy {
+    white-space: nowrap;
+    margin-top: 4px;
+  }
+}

@@ -1,0 +1,351 @@
+.ride-options {
+  background: #fdf2f0;
+  padding: 32px 0;
+}
+
+.ride-options__heading {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto 40px;
+}
+
+.ride-options__eyebrow {
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  margin-bottom: 8px;
+}
+
+.ride-options__heading h2 {
+  font-size: 1.8rem;
+  margin-bottom: 12px;
+}
+
+.ride-options__subtext {
+  color: #6b7280;
+  font-size: 0.95rem;
+}
+
+.ride-options__layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+}
+
+.ride-options__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+/* Vertical carousel: clips to a fixed viewport (matching the sidebar's
+   height on desktop, via grid stretch) and pages one card at a time with
+   the next card peeking in at the bottom edge. */
+.ride-carousel-v {
+  display: flex;
+  flex-direction: column;
+  height: 700px;
+  min-height: 0;
+}
+
+.ride-carousel-v__viewport {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  border-radius: 16px;
+}
+
+.ride-carousel-v__track {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  transition: transform 0.35s ease;
+}
+
+.ride-carousel-v__item {
+  flex-shrink: 0;
+}
+
+.ride-carousel-v__nav {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.ride-carousel-v__nav button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1.5px solid var(--color-blue);
+  background: var(--color-white);
+  color: var(--color-blue);
+}
+
+.ride-carousel-v__nav button:hover:not(:disabled) {
+  background: var(--color-blue);
+  color: var(--color-white);
+}
+
+.ride-carousel-v__nav button:disabled {
+  opacity: 0.4;
+  border-color: var(--color-border);
+  background: var(--color-bg-muted);
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+
+
+/* Ride card */
+.ride-card {
+  background: var(--color-white);
+  border: 2px solid var(--color-blue);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(2, 23, 69, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ride-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 40px rgba(2, 23, 69, 0.16);
+}
+
+.ride-card__topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 12px 20px;
+  background: #eaf1fb;
+  font-size: 0.85rem;
+  color: var(--color-navy);
+  font-weight: 600;
+}
+
+.ride-card__topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  color: var(--color-blue);
+}
+
+.ride-card__availability {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-primary);
+  font-size: 0.8rem;
+}
+
+.ride-card__availability-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  flex-shrink: 0;
+}
+
+.ride-card__badge {
+  background: var(--color-blue);
+  color: var(--color-white);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: capitalize;
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+
+.ride-card__body {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding: 20px;
+  gap: 16px;
+}
+
+.ride-card__image {
+  position: relative;
+  width: 100%;
+  height: 140px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--color-bg-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-accent-orange);
+  flex-shrink: 0;
+}
+
+.ride-card__image-badge {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  background: rgba(2, 23, 69, 0.85);
+  color: var(--color-white);
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+.ride-card__image .material-icons {
+  font-size: 48px;
+}
+
+.ride-card__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ride-card__name-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.ride-card__name {
+  font-size: 1.2rem;
+}
+
+.ride-card__rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--color-navy);
+  white-space: nowrap;
+}
+
+.ride-card__rating .material-icons {
+  font-size: 16px;
+  color: #f5a623;
+}
+
+.ride-card__review-count {
+  color: var(--color-blue);
+  font-weight: 600;
+}
+
+.ride-card__models {
+  color: #5b6b8c;
+  font-size: 0.85rem;
+  margin-bottom: 12px;
+}
+
+.ride-card__description {
+  color: #5b6b8c;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+
+.ride-card__features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.ride-card__features span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.8rem;
+  color: var(--color-navy);
+  font-weight: 600;
+}
+
+.ride-card__features .material-icons {
+  font-size: 16px;
+  color: var(--color-blue);
+}
+
+.ride-card__pricing {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 10px;
+  background: #eaf1fb;
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 16px;
+}
+
+.ride-card__price-label {
+  display: block;
+  font-size: 0.72rem;
+  color: #5b6b8c;
+  margin-bottom: 2px;
+}
+
+.ride-card__price-value {
+  display: block;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--color-navy);
+}
+
+.ride-card__price-value--highlight {
+  color: var(--color-blue);
+}
+
+.ride-card__price-note {
+  display: block;
+  font-size: 0.72rem;
+  color: #5b6b8c;
+  margin-top: 2px;
+}
+
+.ride-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.btn--dark {
+  background: var(--color-navy);
+  color: var(--color-white);
+  flex: 1;
+}
+
+.btn--whatsapp {
+  background: var(--color-primary);
+  color: var(--color-white);
+  flex: 1;
+}
+
+@media (min-width: 640px) {
+  .ride-card__body {
+    flex-direction: row;
+    align-items: stretch;
+  }
+
+  .ride-card__image {
+    width: 289px;
+    height: auto;
+    flex-shrink: 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .ride-options__heading h2 {
+    font-size: 2.2rem;
+  }
+
+  .ride-options__layout {
+    grid-template-columns: 1fr 380px;
+  }
+}
