@@ -40,6 +40,7 @@
 
 .booking-form__title {
   font-size: 1.4rem;
+  margin-left: -1.1px;
 }
 
 .booking-form__microcopy {
@@ -318,10 +319,17 @@
     flex-direction: row;
     align-items: flex-start;
     justify-content: space-between;
+    padding-right: 76px;
   }
 
   .booking-form__microcopy {
     white-space: nowrap;
     margin-top: 4px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .booking-form__header {
+    padding-right: 96px;
   }
 }

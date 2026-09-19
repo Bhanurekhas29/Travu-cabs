@@ -503,6 +503,14 @@
     flex: 1;
     min-width: 0;
   }
+
+  .ride-card__toggle {
+    display: none;
+  }
+
+  .ride-card__collapsible {
+    grid-template-rows: 1fr;
+  }
 }
 
 @media (min-width: 1024px) {
