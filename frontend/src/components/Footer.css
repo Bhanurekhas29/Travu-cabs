@@ -21,7 +21,7 @@
 }
 
 .footer__logo img {
-  height: 40px;
+  height: 64px;
 }
 
 .footer__logo-text {
@@ -31,7 +31,13 @@
   color: var(--color-white);
 }
 
-.footer__tagline,
+.footer__address-heading {
+  color: var(--color-white);
+  font-size: 0.95rem;
+  margin-top: 12px;
+  margin-bottom: 8px;
+}
+
 .footer__address {
   color: var(--color-white);
   opacity: 0.75;
@@ -70,15 +76,19 @@
 }
 
 .footer__group .footer__contact-list {
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 6px 10px;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.footer__contact-list li:not(:last-child)::after {
-  content: "\00b7";
-  margin-left: 10px;
-  color: rgba(255, 255, 255, 0.4);
+.footer__contact-list a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.footer__contact-list .material-icons {
+  font-size: 16px;
+  color: var(--color-primary);
 }
 
 .footer__group a {
@@ -105,7 +115,7 @@
 
 @media (min-width: 768px) {
   .footer__layout {
-    grid-template-columns: 1.3fr repeat(4, 1fr);
+    grid-template-columns: 1.3fr repeat(3, 1fr);
     gap: 24px;
   }
 }

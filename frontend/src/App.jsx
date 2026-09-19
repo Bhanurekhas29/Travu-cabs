@@ -31,7 +31,7 @@ function App() {
     <>
       <Header siteSettings={siteSettings} />
       <main>
-        <Hero hero={hero} />
+        <Hero hero={hero} siteSettings={siteSettings} />
         <BookingForm preselectedVehicle={preselectedVehicle} />
         <RideOptions onBookVehicle={handleBookVehicle} />
         <HowItWorks />

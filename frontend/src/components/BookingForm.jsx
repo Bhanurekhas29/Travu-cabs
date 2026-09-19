@@ -15,11 +15,37 @@ const INITIAL_FORM = {
   email: "",
 };
 
+const VEHICLE_GROUP_ORDER = ["sedan", "suv", "premium", "van"];
+const VEHICLE_GROUP_LABELS = { sedan: "Sedan", suv: "SUV", premium: "Premium", van: "Van" };
+
 function todayStr() {
   return new Date().toISOString().split("T")[0];
 }
 
-function validate(form) {
+// Within the chosen category (Sedan/SUV/Premium/Van), pick the specific
+// vehicle that actually fits the passenger count - the smallest one whose
+// seat range covers it, so the enquiry names a real, bookable vehicle
+// instead of just the broad category.
+function pickVehicleForCount(members, count) {
+  const fits = members.filter((m) => count >= m.min_seats && count <= m.max_seats);
+  if (fits.length > 0) {
+    return fits.reduce((best, m) => (m.max_seats < best.max_seats ? m : best));
+  }
+  // No single vehicle's range covers this count - it falls in a gap
+  // between tiers (e.g. 19-20 seats, when Urbania tops out at 16 and
+  // Coach Van only starts at 21). Point at the next tier up that could
+  // grow to fit it, so the error/hint tells the customer what they'd
+  // actually need to book, instead of naming a vehicle too small for them.
+  const nextUp = members
+    .filter((m) => m.min_seats > count)
+    .reduce((smallest, m) => (!smallest || m.min_seats < smallest.min_seats ? m : smallest), null);
+  if (nextUp) return nextUp;
+  // Bigger than every vehicle in the category - name the biggest one so
+  // the error can say exactly how far over its limit the count is.
+  return members.reduce((best, m) => (m.max_seats > best.max_seats ? m : best));
+}
+
+function validate(form, selectedVehicle, selectedGroup) {
   const errors = {};
 
   if (!form.pickup_location.trim()) errors.pickup_location = "Pickup location is required.";
@@ -30,7 +56,18 @@ function validate(form) {
     errors.pickup_date = "Pickup date cannot be in the past.";
   }
   if (!form.pickup_time) errors.pickup_time = "Pickup time is required.";
-  if (!form.passengers || Number(form.passengers) < 1) errors.passengers = "At least 1 passenger is required.";
+  if (!form.passengers || Number(form.passengers) < 1) {
+    errors.passengers = "At least 1 passenger is required.";
+  } else if (selectedVehicle) {
+    const count = Number(form.passengers);
+    if (count < selectedVehicle.min_seats) {
+      errors.passengers = `${selectedVehicle.name} needs at least ${selectedVehicle.min_seats} passengers.`;
+    } else if (count > selectedVehicle.max_seats) {
+      errors.passengers = selectedGroup
+        ? `Even our largest ${selectedGroup.label} (${selectedVehicle.name}) seats only ${selectedVehicle.max_seats} passengers.`
+        : `${selectedVehicle.name} seats up to ${selectedVehicle.max_seats} passengers.`;
+    }
+  }
 
   const name = form.full_name.trim();
   if (!name) {
@@ -62,18 +99,47 @@ function BookingForm({ preselectedVehicle }) {
   const [submitError, setSubmitError] = useState("");
 
   useEffect(() => {
-    getVehicleTypes()
-      .then((data) => setVehicleTypes(data.filter((v) => v.is_featured)))
-      .catch(console.error);
+    getVehicleTypes().then(setVehicleTypes).catch(console.error);
   }, []);
+
+  const vehicleGroups = VEHICLE_GROUP_ORDER.map((key) => {
+    const members = vehicleTypes.filter((v) => v.vehicle_group === key);
+    if (members.length === 0) return null;
+    return {
+      key,
+      label: VEHICLE_GROUP_LABELS[key],
+      members,
+      minSeats: Math.min(...members.map((m) => m.min_seats)),
+      maxSeats: Math.max(...members.map((m) => m.max_seats)),
+    };
+  }).filter(Boolean);
+
+  const selectedVehicle = vehicleTypes.find((v) => String(v.id) === String(form.vehicle_type));
+  const selectedGroup = vehicleGroups.find((g) => g.key === selectedVehicle?.vehicle_group);
 
   useEffect(() => {
     if (!preselectedVehicle) return;
-    setForm((prev) => ({ ...prev, vehicle_type: preselectedVehicle.id }));
+    setForm((prev) => {
+      const count = Math.max(
+        preselectedVehicle.min_seats,
+        Math.min(preselectedVehicle.max_seats, Number(prev.passengers) || preselectedVehicle.min_seats)
+      );
+      return { ...prev, vehicle_type: preselectedVehicle.id, passengers: count };
+    });
     setVehicleTypes((prev) =>
       prev.some((v) => v.id === preselectedVehicle.id) ? prev : [...prev, preselectedVehicle]
     );
+    setErrors((prev) => ({ ...prev, passengers: undefined }));
   }, [preselectedVehicle]);
+
+  const handleGroupSelect = (group) => {
+    setForm((prev) => {
+      const count = Math.max(group.minSeats, Math.min(group.maxSeats, Number(prev.passengers) || group.minSeats));
+      const vehicle = pickVehicleForCount(group.members, count);
+      return { ...prev, passengers: count, vehicle_type: vehicle.id };
+    });
+    setErrors((prev) => ({ ...prev, passengers: undefined }));
+  };
 
   const updateField = (field) => (e) => {
     const value = e.target.value;
@@ -88,7 +154,16 @@ function BookingForm({ preselectedVehicle }) {
   };
 
   const handlePassengerChange = (delta) => {
-    setForm((prev) => ({ ...prev, passengers: Math.max(1, Number(prev.passengers) + delta) }));
+    setForm((prev) => {
+      let next = Number(prev.passengers) + delta;
+      if (!selectedGroup) {
+        return { ...prev, passengers: Math.max(1, next) };
+      }
+      next = Math.max(selectedGroup.minSeats, Math.min(selectedGroup.maxSeats, next));
+      const vehicle = pickVehicleForCount(selectedGroup.members, next);
+      return { ...prev, passengers: next, vehicle_type: vehicle.id };
+    });
+    setErrors((prev) => ({ ...prev, passengers: undefined }));
   };
 
   const handleSubmit = async (e) => {
@@ -96,7 +171,7 @@ function BookingForm({ preselectedVehicle }) {
     setSuccessMessage("");
     setSubmitError("");
 
-    const clientErrors = validate(form);
+    const clientErrors = validate(form, selectedVehicle, selectedGroup);
     if (Object.keys(clientErrors).length > 0) {
       setErrors(clientErrors);
       return;
@@ -236,30 +311,36 @@ function BookingForm({ preselectedVehicle }) {
                     <span className="material-icons">add</span>
                   </button>
                 </div>
+                {selectedVehicle && !errors.passengers && (
+                  <span className="form-field__hint">
+                    We'll arrange: {selectedVehicle.name} ({selectedVehicle.min_seats}
+                    {selectedVehicle.min_seats !== selectedVehicle.max_seats ? `-${selectedVehicle.max_seats}` : ""} seats)
+                  </span>
+                )}
                 {errors.passengers && <span className="form-field__error">{errors.passengers}</span>}
               </div>
             </div>
 
             <div className="booking-form__row booking-form__row--mixed">
-              {vehicleTypes.length > 0 && (
+              {vehicleGroups.length > 0 && (
                 <div className="form-field booking-form__vehicle-field">
                   <label>Vehicle Type</label>
                   <div className="booking-form__vehicles">
-                    {vehicleTypes.map((v) => (
+                    {vehicleGroups.map((g) => (
                       <button
                         type="button"
-                        key={v.id}
-                        className={String(form.vehicle_type) === String(v.id) ? "is-active" : ""}
-                        onClick={() => setForm((prev) => ({ ...prev, vehicle_type: v.id }))}
+                        key={g.key}
+                        className={selectedVehicle?.vehicle_group === g.key ? "is-active" : ""}
+                        onClick={() => handleGroupSelect(g)}
                       >
                         <span className="booking-form__vehicle-thumb">
-                          {v.image ? (
-                            <img src={v.image} alt="" />
+                          {g.members[0].image ? (
+                            <img src={g.members[0].image} alt="" />
                           ) : (
                             <span className="material-icons" aria-hidden="true">directions_car</span>
                           )}
                         </span>
-                        <span className="booking-form__vehicle-label">{v.name}</span>
+                        <span className="booking-form__vehicle-label">{g.label}</span>
                       </button>
                     ))}
                   </div>

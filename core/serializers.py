@@ -9,6 +9,7 @@ from .models import (
     HeroSection,
     HowItWorksStep,
     JourneyBanner,
+    SafetyPoint,
     SafetySection,
     SectionHeading,
     SiteSettings,
@@ -54,6 +55,12 @@ class SafetySectionSerializer(serializers.ModelSerializer):
         fields = ["heading", "description", "image", "badge_text"]
 
 
+class SafetyPointSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SafetyPoint
+        fields = ["id", "title", "display_order"]
+
+
 class WhyChooseUsSectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = WhyChooseUsSection
@@ -81,6 +88,7 @@ class SiteSettingsSerializer(serializers.ModelSerializer):
             "address",
             "facebook_url",
             "instagram_url",
+            "google_url",
             "extra_luggage_note",
         ]
 
@@ -106,9 +114,11 @@ class VehicleTypeSerializer(serializers.ModelSerializer):
         model = VehicleType
         fields = [
             "id",
+            "vehicle_group",
             "name",
             "models_text",
-            "seating_capacity",
+            "min_seats",
+            "max_seats",
             "ideal_for",
             "description",
             "luggage_capacity",

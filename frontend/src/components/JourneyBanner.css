@@ -1,10 +1,48 @@
 .journey-banner {
   position: relative;
+  overflow: hidden;
   background: linear-gradient(135deg, var(--color-navy) 0%, var(--color-blue-dark) 60%, var(--color-blue) 100%);
-  background-size: cover;
-  background-position: center;
+  display: flex;
+  align-items: center;
+  min-height: 420px;
   padding: 48px 0 56px;
   color: var(--color-white);
+}
+
+.journey-banner__bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  /* Fast continuous "expanding" zoom (Ken Burns effect), matching the hero. */
+  animation: journey-banner-zoom 6s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+@keyframes journey-banner-zoom {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.15);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .journey-banner__bg {
+    animation: none;
+  }
+}
+
+.journey-banner__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(2, 23, 69, 0.75), rgba(2, 23, 69, 0.35));
+}
+
+.journey-banner__content {
+  position: relative;
+  z-index: 1;
 }
 
 .journey-banner__eyebrow {
@@ -64,6 +102,7 @@
 
 @media (min-width: 768px) {
   .journey-banner {
+    min-height: 520px;
     padding: 72px 0 80px;
   }
 

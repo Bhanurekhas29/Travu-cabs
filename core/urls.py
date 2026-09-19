@@ -10,6 +10,7 @@ urlpatterns = [
     path("how-it-works-steps/", views.HowItWorksStepListView.as_view(), name="how-it-works-step-list"),
     path("journey-banner/", views.JourneyBannerView.as_view(), name="journey-banner"),
     path("safety-section/", views.SafetySectionView.as_view(), name="safety-section"),
+    path("safety-points/", views.SafetyPointListView.as_view(), name="safety-point-list"),
     path("cta-section/", views.CTASectionView.as_view(), name="cta-section"),
     path("footer-links/", views.FooterLinkListView.as_view(), name="footer-link-list"),
     path("why-choose-us-section/", views.WhyChooseUsSectionView.as_view(), name="why-choose-us-section"),

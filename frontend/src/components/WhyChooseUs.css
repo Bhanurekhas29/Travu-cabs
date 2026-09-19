@@ -50,6 +50,11 @@
   row-gap: 4px;
   padding: 20px 0;
   border-bottom: 1px solid var(--color-border);
+  transition: padding-left 0.25s ease;
+}
+
+.why-choose-us__feature:hover {
+  padding-left: 8px;
 }
 
 .why-choose-us__feature-icon {
@@ -62,6 +67,13 @@
   border-radius: 10px;
   background: #fdeceb;
   color: var(--color-primary);
+  transition: transform 0.3s ease, background 0.3s ease, color 0.3s ease;
+}
+
+.why-choose-us__feature:hover .why-choose-us__feature-icon {
+  transform: scale(1.12) rotate(-8deg);
+  background: var(--color-primary);
+  color: var(--color-white);
 }
 
 .why-choose-us__feature-title {

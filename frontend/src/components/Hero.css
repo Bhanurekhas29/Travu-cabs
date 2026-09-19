@@ -11,30 +11,9 @@
   inset: 0;
   background-size: cover;
   background-position: center;
-  /* Slow continuous "expanding" zoom (Ken Burns effect) - always runs,
-     whether there's one hero photo or two. */
-  animation: hero-zoom 18s ease-in-out infinite alternate;
+  /* Fast continuous "expanding" zoom (Ken Burns effect). */
+  animation: hero-zoom 6s ease-in-out infinite alternate;
   will-change: transform;
-}
-
-/* Two-image crossfade: both layers share the same 10s linear cycle, but
-   B plays in reverse so they're always fading opposite each other. The
-   zoom animation runs alongside the crossfade on each layer. */
-.hero__bg--fade-a {
-  animation: hero-zoom 18s ease-in-out infinite alternate, hero-crossfade 10s linear infinite alternate;
-}
-
-.hero__bg--fade-b {
-  animation: hero-zoom 18s ease-in-out infinite alternate, hero-crossfade 10s linear infinite alternate-reverse;
-}
-
-@keyframes hero-crossfade {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
 }
 
 @keyframes hero-zoom {
@@ -42,14 +21,12 @@
     transform: scale(1);
   }
   to {
-    transform: scale(1.1);
+    transform: scale(1.15);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero__bg,
-  .hero__bg--fade-a,
-  .hero__bg--fade-b {
+  .hero__bg {
     animation: none;
   }
 }
@@ -68,6 +45,25 @@
 .hero__inner {
   position: relative;
   z-index: 1;
+}
+
+.hero__unit-of {
+  display: inline-block;
+  margin-bottom: 16px;
+  padding: 6px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  color: var(--color-white);
+  background: rgba(255, 255, 255, 0.08);
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.hero__unit-of:hover {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.7);
 }
 
 .hero__eyebrow {

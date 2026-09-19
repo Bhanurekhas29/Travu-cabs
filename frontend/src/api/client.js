@@ -72,6 +72,12 @@ export async function getSafetySection() {
   return res.json();
 }
 
+export async function getSafetyPoints() {
+  const res = await fetch(`${API_BASE_URL}/safety-points/`);
+  if (!res.ok) throw new Error("Failed to load safety points");
+  return res.json();
+}
+
 export async function getWhyChooseUsSection() {
   const res = await fetch(`${API_BASE_URL}/why-choose-us-section/`);
   if (!res.ok) throw new Error("Failed to load why choose us section");

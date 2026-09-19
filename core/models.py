@@ -64,6 +64,9 @@ class SiteSettings(SingletonModel):
     instagram_url = models.URLField(
         blank=True, help_text="Link to your Instagram page. Leave blank to hide the icon."
     )
+    google_url = models.URLField(
+        blank=True, help_text="Link to your Google Business profile/reviews page. Leave blank to hide the icon."
+    )
 
     extra_luggage_note = models.TextField(
         blank=True,
@@ -163,6 +166,18 @@ class SectionHeading(models.Model):
 
 
 class VehicleType(models.Model):
+    class VehicleGroup(models.TextChoices):
+        SEDAN = "sedan", "Sedan"
+        SUV = "suv", "SUV"
+        PREMIUM = "premium", "Premium"
+        VAN = "van", "Van"
+
+    vehicle_group = models.CharField(
+        max_length=20,
+        choices=VehicleGroup.choices,
+        help_text="Which broad group this vehicle category belongs to. Used to organise/filter "
+        "vehicles on the website.",
+    )
     name = models.CharField(
         max_length=100,
         help_text="This is the vehicle's title shown to customers on the website. "
@@ -175,8 +190,15 @@ class VehicleType(models.Model):
         help_text="List the actual car model names for this vehicle type, separated by commas. "
         "e.g. Swift Dzire, Honda Amaze, Toyota Etios. Leave blank if not applicable.",
     )
-    seating_capacity = models.PositiveIntegerField(
-        help_text="Number of passenger seats (not counting the driver). e.g. 4"
+    min_seats = models.PositiveIntegerField(
+        verbose_name="Minimum seats",
+        help_text="Smallest passenger seat count this vehicle category comes in (not counting the "
+        "driver). e.g. 3. Use the same value as Maximum seats if this category only comes in one size.",
+    )
+    max_seats = models.PositiveIntegerField(
+        verbose_name="Maximum seats",
+        help_text="Largest passenger seat count this vehicle category comes in (not counting the "
+        "driver). e.g. 18. Use the same value as Minimum seats if this category only comes in one size.",
     )
     ideal_for = models.CharField(
         max_length=150,
@@ -229,7 +251,7 @@ class VehicleType(models.Model):
     availability_text = models.CharField(
         max_length=100,
         blank=True,
-        help_text="Small availability note shown top-right of the card, e.g. Available Now in Kanyakumari. "
+        help_text="Small availability note shown top-right of the card, e.g. Available Now in Trichy. "
         "Leave blank to hide.",
     )
     rating = models.DecimalField(
@@ -314,6 +336,10 @@ class VehicleType(models.Model):
         verbose_name = "Vehicle Type"
         verbose_name_plural = "Vehicle Types"
         ordering = ["display_order", "name"]
+
+    def clean(self):
+        if self.min_seats and self.max_seats and self.min_seats > self.max_seats:
+            raise ValidationError({"max_seats": "Maximum seats cannot be less than minimum seats."})
 
     def __str__(self):
         return self.name
@@ -458,6 +484,23 @@ class SafetySection(SingletonModel):
         return "Safety Section"
 
 
+class SafetyPoint(models.Model):
+    title = models.CharField(
+        max_length=100, help_text="Short safety point shown with a checkmark. e.g. Driver Verification"
+    )
+    display_order = models.PositiveIntegerField(
+        default=0, help_text="Controls the order these show in. Lower numbers show first."
+    )
+
+    class Meta:
+        verbose_name = "Safety Point"
+        verbose_name_plural = "Safety Points"
+        ordering = ["display_order"]
+
+    def __str__(self):
+        return self.title
+
+
 class CTASection(SingletonModel):
     heading = models.CharField(
         max_length=150, blank=True, help_text="Heading for the closing call-to-action section. e.g. Ready to Ride?"
@@ -487,7 +530,6 @@ class FooterLink(models.Model):
     class GroupName(models.TextChoices):
         QUICK_LINKS = "quick_links", "Quick Links"
         RIDE_OPTIONS = "ride_options", "Ride Options"
-        SUPPORT = "support", "Support"
 
     group_name = models.CharField(
         max_length=30, choices=GroupName.choices, help_text="Which footer column this link appears under."

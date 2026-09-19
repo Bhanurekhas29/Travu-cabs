@@ -1,26 +1,21 @@
 import "./Hero.css";
 
-function Hero({ hero }) {
+function Hero({ hero, siteSettings }) {
   if (!hero) return null;
 
-  const image1 = hero.background_image;
-  const image2 = hero.background_image_2;
-  const hasTwoImages = Boolean(image1 && image2);
+  const image = hero.background_image;
 
   return (
     <section id="top" className="hero">
-      {image1 && (
-        <div
-          className={`hero__bg ${hasTwoImages ? "hero__bg--fade-a" : ""}`}
-          style={{ backgroundImage: `url(${image1})` }}
-        />
-      )}
-      {hasTwoImages && (
-        <div className="hero__bg hero__bg--fade-b" style={{ backgroundImage: `url(${image2})` }} />
-      )}
+      {image && <div className="hero__bg" style={{ backgroundImage: `url(${image})` }} />}
       <div className="hero__overlay" />
 
       <div className="container hero__inner">
+        {siteSettings?.unit_of_text && (
+          <a href="https://www.blueholidaysindia.in/" target="_blank" rel="noopener noreferrer" className="hero__unit-of">
+            {siteSettings.brand_name || "Travu"} - {siteSettings.unit_of_text}
+          </a>
+        )}
         <p className="hero__eyebrow">
           <span className="hero__eyebrow-line" aria-hidden="true"></span>
           Every road, made effortless.

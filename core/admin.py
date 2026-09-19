@@ -7,6 +7,7 @@ from .models import (
     HeroSection,
     HowItWorksStep,
     JourneyBanner,
+    SafetyPoint,
     SafetySection,
     SectionHeading,
     SiteSettings,
@@ -48,7 +49,7 @@ class SiteSettingsAdmin(SingletonAdmin):
             "Contact details",
             {"fields": ("primary_phone_number", "secondary_phone_number", "whatsapp_number", "email", "address")},
         ),
-        ("Social links", {"fields": ("facebook_url", "instagram_url")}),
+        ("Social links", {"fields": ("facebook_url", "instagram_url", "google_url")}),
         ("Booking form note", {"fields": ("extra_luggage_note",)}),
         (
             "Email guidelines",
@@ -101,28 +102,42 @@ class SectionHeadingAdmin(admin.ModelAdmin):
 class VehicleTypeAdmin(admin.ModelAdmin):
     list_display = (
         "name",
-        "seating_capacity",
+        "vehicle_group",
+        "min_seats",
+        "max_seats",
         "badge",
+        "availability_text",
         "is_featured",
         "local_rate",
         "outstation_rate",
         "display_order",
     )
-    list_editable = ("is_featured", "display_order")
-    list_filter = ("is_featured", "ac_available_in_hills")
+    list_editable = ("availability_text", "is_featured", "display_order")
+    list_filter = ("vehicle_group", "is_featured", "ac_available_in_hills")
     search_fields = ("name", "models_text")
     fieldsets = (
         (
             None,
             {
                 "description": (
-                    "This is the list of cars/vans customers can choose from on the website "
-                    "('Choose the Ride' section). Each row here is one vehicle card. "
-                    "You can edit the text, photo and price for any vehicle below, "
-                    "or add a brand new vehicle using the 'Add Vehicle Type' button on the list page. "
-                    "Do not delete a vehicle that already has bookings against it — ask the developer first."
+                    "This is the list of vehicle categories customers can choose from on the website "
+                    "('Choose the Ride' section). There should normally only be 9 rows here, one per "
+                    "category (Sedan, Ertiga, Regular Innova, Innova Crysta, Innova Hycross, Fortuner, "
+                    "Tempo Traveller, Urbania, Coach Van) — a category can cover more than one seat "
+                    "count (e.g. Tempo Traveller covers 10 to 18 seats) using Minimum/Maximum seats "
+                    "below, so it does not need a separate row per seat count. "
+                    "You can edit the text, photo and price for any category below, "
+                    "or add a brand new one using the 'Add Vehicle Type' button on the list page. "
+                    "Do not delete a category that already has bookings against it — ask the developer first."
                 ),
-                "fields": ("name", "models_text", "seating_capacity", "configuration_note"),
+                "fields": (
+                    "vehicle_group",
+                    "name",
+                    "models_text",
+                    "min_seats",
+                    "max_seats",
+                    "configuration_note",
+                ),
             },
         ),
         (
@@ -263,8 +278,26 @@ class SafetySectionAdmin(SingletonAdmin):
             None,
             {
                 "description": "The section that reassures customers about safety - heading, "
-                "description, photo and the small badge text shown on the photo.",
+                "description, photo and the small badge text shown on the photo. The 4 checklist "
+                "points shown next to it (Driver Verification, Live Trip Tracking, etc.) are "
+                "managed separately under 'Safety Points'.",
                 "fields": ("heading", "description", "image", "badge_text"),
+            },
+        ),
+    )
+
+
+@admin.register(SafetyPoint)
+class SafetyPointAdmin(admin.ModelAdmin):
+    list_display = ("title", "display_order")
+    list_editable = ("display_order",)
+    fieldsets = (
+        (
+            None,
+            {
+                "description": "The checklist points shown with a checkmark in the safety section "
+                "(e.g. Driver Verification, Live Trip Tracking, Trip Details, Emergency Support).",
+                "fields": ("title", "display_order"),
             },
         ),
     )

@@ -89,6 +89,11 @@
   color: var(--color-primary);
 }
 
+.form-field__hint {
+  font-size: 0.78rem;
+  color: #6b7280;
+}
+
 /* Icon-in-input (pickup/drop location, date, time, name) */
 .input-with-icon {
   position: relative;

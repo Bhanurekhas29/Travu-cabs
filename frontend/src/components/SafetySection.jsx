@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
-import { getSafetySection } from "../api/client";
+import { getSafetyPoints, getSafetySection } from "../api/client";
 import useScrollReveal from "../hooks/useScrollReveal";
 import "./SafetySection.css";
 
 function SafetySection() {
   const [safety, setSafety] = useState(null);
+  const [points, setPoints] = useState([]);
   const [revealRef, revealVisible] = useScrollReveal();
 
   useEffect(() => {
     getSafetySection().then(setSafety).catch(console.error);
+    getSafetyPoints().then(setPoints).catch(console.error);
   }, []);
 
   if (!safety) return null;
@@ -42,6 +44,23 @@ function SafetySection() {
           <p className="safety-section__eyebrow">Your Safety Comes First</p>
           <h2 className="safety-section__heading">{safety.heading}</h2>
           {safety.description && <p className="safety-section__description">{safety.description}</p>}
+
+          {points.length > 0 && (
+            <ul className="safety-section__points">
+              {points.map((point, index) => (
+                <li
+                  className="safety-section__point"
+                  key={point.id}
+                  style={{ transitionDelay: `${index * 350}ms` }}
+                >
+                  <span className="safety-section__point-check">
+                    <span className="material-icons" aria-hidden="true">check</span>
+                  </span>
+                  {point.title}
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       </div>
     </section>

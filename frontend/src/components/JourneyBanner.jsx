@@ -16,22 +16,16 @@ function JourneyBanner() {
   const hasBackgroundImage = Boolean(banner.background_image);
 
   return (
-    <section
-      ref={revealRef}
-      className={`journey-banner reveal ${revealVisible ? "reveal-visible" : ""}`}
-      style={
-        hasBackgroundImage
-          ? {
-              backgroundImage: `linear-gradient(90deg, rgba(2,23,69,0.75), rgba(2,23,69,0.35)), url(${banner.background_image})`,
-            }
-          : undefined
-      }
-    >
-      <div className="container">
+    <section ref={revealRef} className={`journey-banner reveal ${revealVisible ? "reveal-visible" : ""}`}>
+      {hasBackgroundImage && (
+        <div className="journey-banner__bg" style={{ backgroundImage: `url(${banner.background_image})` }} />
+      )}
+      <div className="journey-banner__overlay" />
+      <div className="container journey-banner__content">
         <p className="journey-banner__eyebrow">One City. Endless Routes.</p>
         <h2 className="journey-banner__heading">{banner.heading}</h2>
 
-        <a href="#book" className="journey-banner__route">
+        <div className="journey-banner__route">
           <span className="journey-banner__route-point">
             <span className="material-icons" aria-hidden="true">location_on</span>
             Pickup
@@ -41,7 +35,7 @@ function JourneyBanner() {
             Destination
             <span className="material-icons" aria-hidden="true">near_me</span>
           </span>
-        </a>
+        </div>
       </div>
     </section>
   );

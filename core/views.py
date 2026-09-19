@@ -7,6 +7,7 @@ from .models import (
     HeroSection,
     HowItWorksStep,
     JourneyBanner,
+    SafetyPoint,
     SafetySection,
     SectionHeading,
     SiteSettings,
@@ -21,6 +22,7 @@ from .serializers import (
     HeroSectionSerializer,
     HowItWorksStepSerializer,
     JourneyBannerSerializer,
+    SafetyPointSerializer,
     SafetySectionSerializer,
     SectionHeadingSerializer,
     SiteSettingsSerializer,
@@ -78,6 +80,11 @@ class SafetySectionView(generics.RetrieveAPIView):
 
     def get_object(self):
         return SafetySection.load()
+
+
+class SafetyPointListView(generics.ListAPIView):
+    queryset = SafetyPoint.objects.all()
+    serializer_class = SafetyPointSerializer
 
 
 class WhyChooseUsSectionView(generics.RetrieveAPIView):
