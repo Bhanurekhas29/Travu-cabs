@@ -14,14 +14,33 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+import os
+
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.http import JsonResponse
 from django.urls import include, path
+
+
+def debug_media_listing(request):
+    root = str(settings.MEDIA_ROOT)
+    try:
+        top = os.listdir(root)
+    except Exception as e:
+        return JsonResponse({"MEDIA_ROOT": root, "error": str(e)})
+    vehicles_dir = os.path.join(root, "vehicles")
+    try:
+        vehicles = os.listdir(vehicles_dir)
+    except Exception as e:
+        vehicles = f"error: {e}"
+    return JsonResponse({"MEDIA_ROOT": root, "top_level": top, "vehicles": vehicles})
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('core.urls')),
+    path('debug-media/', debug_media_listing),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
