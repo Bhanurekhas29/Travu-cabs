@@ -110,3 +110,18 @@ export async function createBookingEnquiry(payload) {
   }
   return data;
 }
+
+export async function createContactMessage(payload) {
+  const res = await fetch(`${API_BASE_URL}/contact-messages/`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+  const data = await res.json();
+  if (!res.ok) {
+    const error = new Error("Contact message validation failed");
+    error.fieldErrors = data;
+    throw error;
+  }
+  return data;
+}

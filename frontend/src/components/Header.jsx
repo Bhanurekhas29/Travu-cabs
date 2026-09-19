@@ -6,7 +6,7 @@ const NAV_LINKS = [
   { label: "Ride Options", href: "#rides" },
   { label: "How It Works", href: "#how-it-works" },
   { label: "Safety", href: "#safety" },
-  { label: "Contact", href: "#contact" },
+  { label: "Contact", href: "#contact-form" },
 ];
 
 function Header({ siteSettings }) {

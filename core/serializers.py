@@ -4,6 +4,7 @@ from rest_framework import serializers
 
 from .models import (
     BookingEnquiry,
+    ContactMessage,
     CTASection,
     FooterLink,
     HeroSection,
@@ -182,3 +183,28 @@ class BookingEnquirySerializer(serializers.ModelSerializer):
         if value < date.today():
             raise serializers.ValidationError("Pickup date cannot be in the past.")
         return value
+
+
+class ContactMessageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ContactMessage
+        fields = ["id", "full_name", "email", "mobile_number", "message", "created_at"]
+        read_only_fields = ["id", "created_at"]
+
+    def validate_mobile_number(self, value):
+        digits = value.strip()
+        if not digits.isdigit():
+            raise serializers.ValidationError("Mobile number must contain digits only.")
+        if len(digits) != 10:
+            raise serializers.ValidationError("Mobile number must be exactly 10 digits.")
+        return digits
+
+    def validate_full_name(self, value):
+        if len(value.strip()) < 3:
+            raise serializers.ValidationError("Full name must be at least 3 characters.")
+        return value.strip()
+
+    def validate_message(self, value):
+        if len(value.strip()) < 5:
+            raise serializers.ValidationError("Message is too short.")
+        return value.strip()

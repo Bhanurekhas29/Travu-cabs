@@ -16,4 +16,5 @@ urlpatterns = [
     path("why-choose-us-section/", views.WhyChooseUsSectionView.as_view(), name="why-choose-us-section"),
     path("why-choose-us-features/", views.WhyChooseUsFeatureListView.as_view(), name="why-choose-us-feature-list"),
     path("bookings/", views.BookingEnquiryCreateView.as_view(), name="booking-create"),
+    path("contact-messages/", views.ContactMessageCreateView.as_view(), name="contact-message-create"),
 ]

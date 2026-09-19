@@ -382,6 +382,23 @@ class BookingEnquiry(models.Model):
         return f"{self.full_name} - {self.pickup_location} to {self.destination}"
 
 
+class ContactMessage(models.Model):
+    full_name = models.CharField(max_length=100, help_text="Customer's name.")
+    email = models.EmailField(blank=True, help_text="Customer's email, if provided.")
+    mobile_number = models.CharField(max_length=15, help_text="Customer's mobile number.")
+    message = models.TextField(help_text="What the customer wants to ask or tell you.")
+
+    created_at = models.DateTimeField(auto_now_add=True, help_text="When this message was submitted.")
+
+    class Meta:
+        verbose_name = "Contact Message"
+        verbose_name_plural = "Contact Messages"
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return f"{self.full_name} - {self.created_at:%Y-%m-%d %H:%M}"
+
+
 class HowItWorksStep(models.Model):
     step_number = models.PositiveIntegerField(help_text="Order this step appears in. e.g. 1, 2, 3")
     title = models.CharField(max_length=100, help_text="Short title for this step. e.g. Enter Your Trip")

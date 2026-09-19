@@ -2,6 +2,7 @@ from django.contrib import admin
 
 from .models import (
     BookingEnquiry,
+    ContactMessage,
     CTASection,
     FooterLink,
     HeroSection,
@@ -202,6 +203,26 @@ class BookingEnquiryAdmin(admin.ModelAdmin):
                 "description": "These are booking requests submitted by customers through the website. "
                 "This list is read-only - it's just a record of enquiries, nothing here can be edited.",
                 "fields": [f.name for f in BookingEnquiry._meta.fields],
+            },
+        ),
+    )
+
+    def has_add_permission(self, request):
+        return False
+
+
+@admin.register(ContactMessage)
+class ContactMessageAdmin(admin.ModelAdmin):
+    list_display = ("full_name", "mobile_number", "email", "created_at")
+    search_fields = ("full_name", "mobile_number", "email", "message")
+    readonly_fields = [f.name for f in ContactMessage._meta.fields]
+    fieldsets = (
+        (
+            None,
+            {
+                "description": "These are messages submitted through the website's contact form. "
+                "This list is read-only - it's just a record of messages, nothing here can be edited.",
+                "fields": [f.name for f in ContactMessage._meta.fields],
             },
         ),
     )

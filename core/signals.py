@@ -7,7 +7,7 @@ from django.dispatch import receiver
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 
-from .models import BookingEnquiry, SiteSettings
+from .models import BookingEnquiry, ContactMessage, SiteSettings
 
 logger = logging.getLogger(__name__)
 
@@ -86,3 +86,28 @@ def notify_new_booking_enquiry(sender, instance, created, **kwargs):
             )
         except Exception:
             logger.exception("Failed to send booking confirmation email for enquiry id=%s", instance.pk)
+
+
+@receiver(post_save, sender=ContactMessage)
+def notify_new_contact_message(sender, instance, created, **kwargs):
+    if not created:
+        return
+
+    context = {
+        "full_name": instance.full_name,
+        "mobile_number": instance.mobile_number,
+        "email": instance.email,
+        "message": instance.message,
+    }
+
+    try:
+        _send_html_email(
+            f"New Contact Message - {instance.full_name}",
+            "emails/contact_notification.html",
+            context,
+            settings.BOOKING_NOTIFICATION_EMAIL,
+        )
+    except Exception:
+        # The message must be saved successfully for the customer even if
+        # the notification email fails (bad SMTP creds, network issue, etc.).
+        logger.exception("Failed to send contact message notification email for message id=%s", instance.pk)

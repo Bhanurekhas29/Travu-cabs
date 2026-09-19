@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getSectionHeadings, getSiteSettings, getVehicleTypes } from "../api/client";
 import FareEstimator from "./FareEstimator";
+import ContactForm from "./ContactForm";
 import useScrollReveal from "../hooks/useScrollReveal";
 import "./RideOptions.css";
 
@@ -287,6 +288,10 @@ function RideOptions({ onBookVehicle }) {
 
         <div className="ride-options__estimator">
           <FareEstimator vehicles={vehicles} siteSettings={siteSettings} onBookVehicle={onBookVehicle} />
+        </div>
+
+        <div className="ride-options__estimator">
+          <ContactForm />
         </div>
       </div>
     </section>

@@ -2,6 +2,7 @@ from rest_framework import generics
 
 from .models import (
     BookingEnquiry,
+    ContactMessage,
     CTASection,
     FooterLink,
     HeroSection,
@@ -17,6 +18,7 @@ from .models import (
 )
 from .serializers import (
     BookingEnquirySerializer,
+    ContactMessageSerializer,
     CTASectionSerializer,
     FooterLinkSerializer,
     HeroSectionSerializer,
@@ -107,3 +109,8 @@ class VehicleTypeListView(generics.ListAPIView):
 class BookingEnquiryCreateView(generics.CreateAPIView):
     queryset = BookingEnquiry.objects.all()
     serializer_class = BookingEnquirySerializer
+
+
+class ContactMessageCreateView(generics.CreateAPIView):
+    queryset = ContactMessage.objects.all()
+    serializer_class = ContactMessageSerializer
