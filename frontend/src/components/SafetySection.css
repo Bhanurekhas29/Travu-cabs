@@ -73,6 +73,10 @@
   font-size: 16px;
 }
 
+.safety-section__content {
+  margin-top: 56px;
+}
+
 .safety-section__eyebrow {
   font-family: var(--font-heading);
   font-size: 0.8rem;
@@ -156,5 +160,9 @@
 
   .safety-section__heading {
     font-size: 2.3rem;
+  }
+
+  .safety-section__content {
+    margin-top: 0;
   }
 }
