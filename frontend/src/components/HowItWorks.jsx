@@ -24,7 +24,7 @@ function HowItWorks() {
       <div className="container">
         {heading && (
           <div className="how-it-works__heading">
-            <p className="how-it-works__eyebrow">Simple By Design</p>
+            {heading.eyebrow && <p className="how-it-works__eyebrow">{heading.eyebrow}</p>}
             <h2>{heading.heading}</h2>
           </div>
         )}

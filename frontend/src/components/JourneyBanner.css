@@ -59,45 +59,89 @@
   font-size: 1.9rem;
   line-height: 1.2;
   color: var(--color-white);
+  max-width: 560px;
+  margin-bottom: 12px;
+}
+
+.journey-banner__description {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.85);
   max-width: 520px;
-  margin-bottom: 32px;
+  margin-bottom: 28px;
 }
 
 .journey-banner__route {
   display: flex;
-  align-items: center;
-  gap: 14px;
-  max-width: 560px;
-  padding: 18px 20px;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 620px;
+  padding: 14px;
   border-radius: 12px;
   background: rgba(2, 23, 69, 0.55);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
 }
 
-.journey-banner__route-point {
+.journey-banner__route-field {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  white-space: nowrap;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: var(--color-white);
 }
 
-.journey-banner__route-point .material-icons {
+.journey-banner__route-field .material-icons {
   font-size: 18px;
   color: var(--color-primary);
 }
 
-.journey-banner__route-point--end .material-icons {
-  color: #2dd4bf;
+.journey-banner__route-field:last-of-type .material-icons {
+  color: #0a4cd8;
 }
 
-.journey-banner__route-line {
+.journey-banner__route-field input {
   flex: 1;
-  height: 0;
-  border-top: 2px dashed rgba(255, 255, 255, 0.5);
-  min-width: 30px;
+  min-width: 0;
+  border: none;
+  outline: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-navy);
+  background: transparent;
+}
+
+.journey-banner__route-field input::placeholder {
+  color: #9ca3af;
+  font-weight: 500;
+}
+
+.journey-banner__route-submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 12px;
+  border-radius: 8px;
+  background: var(--color-primary);
+  color: var(--color-white);
+  font-weight: 700;
+}
+
+@media (min-width: 640px) {
+  .journey-banner__route {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .journey-banner__route-submit {
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border-radius: 50%;
+  }
 }
 
 @media (min-width: 768px) {

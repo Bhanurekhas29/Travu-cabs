@@ -6,6 +6,7 @@ from .models import (
     BookingEnquiry,
     ContactMessage,
     CTASection,
+    FAQ,
     FooterLink,
     HeroSection,
     HowItWorksStep,
@@ -23,7 +24,7 @@ from .models import (
 class SectionHeadingSerializer(serializers.ModelSerializer):
     class Meta:
         model = SectionHeading
-        fields = ["section_key", "heading", "subtext"]
+        fields = ["section_key", "eyebrow", "heading", "subtext"]
 
 
 class HowItWorksStepSerializer(serializers.ModelSerializer):
@@ -35,7 +36,7 @@ class HowItWorksStepSerializer(serializers.ModelSerializer):
 class JourneyBannerSerializer(serializers.ModelSerializer):
     class Meta:
         model = JourneyBanner
-        fields = ["heading", "background_image"]
+        fields = ["eyebrow", "heading", "description", "background_image"]
 
 
 class FooterLinkSerializer(serializers.ModelSerializer):
@@ -47,25 +48,25 @@ class FooterLinkSerializer(serializers.ModelSerializer):
 class CTASectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = CTASection
-        fields = ["heading", "description", "button_text", "button_link", "image"]
+        fields = ["eyebrow", "heading", "description", "button_text", "button_link", "image"]
 
 
 class SafetySectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = SafetySection
-        fields = ["heading", "description", "image", "badge_text"]
+        fields = ["heading", "description", "image", "badge_text", "button_text", "button_link"]
 
 
 class SafetyPointSerializer(serializers.ModelSerializer):
     class Meta:
         model = SafetyPoint
-        fields = ["id", "title", "display_order"]
+        fields = ["id", "title", "description", "display_order"]
 
 
 class WhyChooseUsSectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = WhyChooseUsSection
-        fields = ["heading", "description", "button_text", "button_link"]
+        fields = ["eyebrow", "heading", "description", "button_text", "button_link"]
 
 
 class WhyChooseUsFeatureSerializer(serializers.ModelSerializer):
@@ -208,3 +209,9 @@ class ContactMessageSerializer(serializers.ModelSerializer):
         if len(value.strip()) < 5:
             raise serializers.ValidationError("Message is too short.")
         return value.strip()
+
+
+class FAQSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FAQ
+        fields = ["id", "question", "answer", "display_order"]

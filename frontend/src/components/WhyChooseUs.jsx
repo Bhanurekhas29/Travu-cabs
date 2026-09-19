@@ -17,7 +17,7 @@ function WhyChooseUs() {
     <section ref={revealRef} className={`why-choose-us reveal ${revealVisible ? "reveal-visible" : ""}`}>
       <div className="container why-choose-us__layout">
         <div className="why-choose-us__content">
-          <p className="why-choose-us__eyebrow">Why Ride With Us</p>
+          {section?.eyebrow && <p className="why-choose-us__eyebrow">{section.eyebrow}</p>}
           {section?.heading && <h2 className="why-choose-us__heading">{section.heading}</h2>}
           {section?.description && <p className="why-choose-us__description">{section.description}</p>}
           {section?.button_text && (

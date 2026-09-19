@@ -274,7 +274,7 @@ function RideOptions({ onBookVehicle }) {
             ref={revealRef}
             className={`ride-options__heading reveal ${revealVisible ? "reveal-visible" : ""}`}
           >
-            <p className="ride-options__eyebrow">A Ride For Every Plan</p>
+            {heading.eyebrow && <p className="ride-options__eyebrow">{heading.eyebrow}</p>}
             <h2>{heading.heading}</h2>
             {heading.subtext && <p className="ride-options__subtext">{heading.subtext}</p>}
           </div>

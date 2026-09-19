@@ -51,15 +51,27 @@ function SafetySection() {
                 <li
                   className="safety-section__point"
                   key={point.id}
-                  style={{ transitionDelay: `${index * 350}ms` }}
+                  style={{ transitionDelay: `${index * 200}ms` }}
                 >
                   <span className="safety-section__point-check">
                     <span className="material-icons" aria-hidden="true">check</span>
                   </span>
-                  {point.title}
+                  <span className="safety-section__point-text">
+                    <span className="safety-section__point-title">{point.title}</span>
+                    {point.description && (
+                      <span className="safety-section__point-description">{point.description}</span>
+                    )}
+                  </span>
                 </li>
               ))}
             </ul>
+          )}
+
+          {safety.button_text && (
+            <a href={safety.button_link || "#book"} className="btn btn--primary safety-section__cta">
+              {safety.button_text}
+              <span className="material-icons" aria-hidden="true">arrow_forward</span>
+            </a>
           )}
         </div>
       </div>

@@ -250,11 +250,17 @@
 }
 
 .fare-estimator__dispatcher-call {
-  display: block;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
   background: var(--color-white);
   color: var(--color-navy);
   font-weight: 700;
   padding: 9px;
   border-radius: 8px;
+}
+
+.fare-estimator__dispatcher-call .material-icons {
+  font-size: 18px;
 }

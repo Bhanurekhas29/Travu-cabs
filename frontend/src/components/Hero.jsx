@@ -22,8 +22,12 @@ function Hero({ hero, siteSettings }) {
         </p>
         <h1 className="hero__heading">
           {hero.heading_line1}
-          <br />
-          <span className="hero__heading-highlight">{hero.heading_line2}</span>
+          {hero.heading_line2 && (
+            <>
+              <br />
+              <span className="hero__heading-highlight">{hero.heading_line2}</span>
+            </>
+          )}
         </h1>
         {hero.subtext && <p className="hero__subtext">{hero.subtext}</p>}
 

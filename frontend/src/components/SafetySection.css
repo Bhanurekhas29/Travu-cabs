@@ -101,9 +101,8 @@
 }
 
 .safety-section__points {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0 32px;
+  display: flex;
+  flex-direction: column;
   margin-top: 28px;
   list-style: none;
   padding: 0;
@@ -111,15 +110,11 @@
 
 .safety-section__point {
   display: flex;
-  align-items: center;
-  gap: 12px;
+  align-items: flex-start;
+  gap: 14px;
   padding-bottom: 16px;
   margin-bottom: 16px;
   border-bottom: 1px solid var(--color-border);
-  font-family: var(--font-heading);
-  font-weight: 700;
-  font-size: 0.95rem;
-  color: var(--color-navy);
   opacity: 0;
   transform: translateY(14px);
   transition: opacity 0.6s ease, transform 0.6s ease;
@@ -140,16 +135,35 @@
   background: var(--color-primary);
   color: var(--color-white);
   flex-shrink: 0;
+  margin-top: 2px;
 }
 
 .safety-section__point-check .material-icons {
   font-size: 16px;
 }
 
-@media (min-width: 480px) {
-  .safety-section__points {
-    grid-template-columns: 1fr 1fr;
-  }
+.safety-section__point-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.safety-section__point-title {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--color-navy);
+}
+
+.safety-section__point-description {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: #6b7280;
+}
+
+.safety-section__cta {
+  display: inline-flex;
+  margin-top: 8px;
 }
 
 @media (min-width: 900px) {

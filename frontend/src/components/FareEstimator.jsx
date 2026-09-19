@@ -235,13 +235,16 @@ function FareEstimator({ vehicles, siteSettings, onBookVehicle }) {
           {dispatcherPhone && (
             <div className="fare-estimator__dispatcher">
               <span className="material-icons fare-estimator__dispatcher-icon" aria-hidden="true">headset_mic</span>
-              <p className="fare-estimator__dispatcher-eyebrow">Custom Itinerary?</p>
-              <h4>Talk to Tour Dispatcher</h4>
+              <p className="fare-estimator__dispatcher-eyebrow">Planning a Group or Family Trip?</p>
+              <h4>Need a Custom Travel Plan?</h4>
               <p>
-                Need customized multi-day pilgrimage routes or specialized multi-pickup corporate transport?
+                Planning a pilgrimage, corporate trip, family tour or multi-day outstation taxi journey?
+                Talk to our travel team for tempo traveller booking, Urbania or coach bus rental, and the
+                right route.
               </p>
               <a href={`tel:+91${dispatcherPhone}`} className="fare-estimator__dispatcher-call">
-                Call +91 {dispatcherPhone}
+                Talk to Our Travel Team
+                <span className="material-icons" aria-hidden="true">arrow_forward</span>
               </a>
             </div>
           )}

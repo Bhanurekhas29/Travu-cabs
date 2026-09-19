@@ -4,6 +4,7 @@ from .models import (
     BookingEnquiry,
     ContactMessage,
     CTASection,
+    FAQ,
     FooterLink,
     HeroSection,
     HowItWorksStep,
@@ -79,7 +80,7 @@ class HeroSectionAdmin(SingletonAdmin):
 
 @admin.register(SectionHeading)
 class SectionHeadingAdmin(admin.ModelAdmin):
-    list_display = ("section_key", "heading", "subtext")
+    list_display = ("section_key", "eyebrow", "heading", "subtext")
     fieldsets = (
         (
             None,
@@ -87,7 +88,7 @@ class SectionHeadingAdmin(admin.ModelAdmin):
                 "description": "Headings for two sections on the website that don't have their own "
                 "dedicated page ('Choose the Ride' and 'How It Works'). Do not add new rows - "
                 "only edit the existing ones.",
-                "fields": ("section_key", "heading", "subtext"),
+                "fields": ("section_key", "eyebrow", "heading", "subtext"),
             },
         ),
     )
@@ -256,7 +257,7 @@ class WhyChooseUsSectionAdmin(SingletonAdmin):
                 "description": "Heading, description and button for the 'Why Choose Us' section. "
                 "The 4 feature tiles under it (Fast Booking, Transparent Pricing, etc.) are managed "
                 "separately under 'Why Choose Us Features'.",
-                "fields": ("heading", "description", "button_text", "button_link"),
+                "fields": ("eyebrow", "heading", "description", "button_text", "button_link"),
             },
         ),
     )
@@ -286,7 +287,7 @@ class JourneyBannerAdmin(SingletonAdmin):
             {
                 "description": "The wide banner section with the heading 'Wherever You're Going, "
                 "We'll Get You There.' and its background photo.",
-                "fields": ("heading", "background_image"),
+                "fields": ("eyebrow", "heading", "description", "background_image"),
             },
         ),
     )
@@ -299,10 +300,10 @@ class SafetySectionAdmin(SingletonAdmin):
             None,
             {
                 "description": "The section that reassures customers about safety - heading, "
-                "description, photo and the small badge text shown on the photo. The 4 checklist "
-                "points shown next to it (Driver Verification, Live Trip Tracking, etc.) are "
-                "managed separately under 'Safety Points'.",
-                "fields": ("heading", "description", "image", "badge_text"),
+                "description, photo, the small badge text shown on the photo, and the button below "
+                "the safety points. The checklist points shown next to it (Trusted Drivers, Reliable "
+                "Vehicles, etc.) are managed separately under 'Safety Points'.",
+                "fields": ("heading", "description", "image", "badge_text", "button_text", "button_link"),
             },
         ),
     )
@@ -310,15 +311,16 @@ class SafetySectionAdmin(SingletonAdmin):
 
 @admin.register(SafetyPoint)
 class SafetyPointAdmin(admin.ModelAdmin):
-    list_display = ("title", "display_order")
+    list_display = ("title", "description", "display_order")
     list_editable = ("display_order",)
     fieldsets = (
         (
             None,
             {
                 "description": "The checklist points shown with a checkmark in the safety section "
-                "(e.g. Driver Verification, Live Trip Tracking, Trip Details, Emergency Support).",
-                "fields": ("title", "display_order"),
+                "(e.g. Trusted Drivers, Reliable Vehicles, Journey Visibility, Travel Support, "
+                "Day or Night Travel).",
+                "fields": ("title", "description", "display_order"),
             },
         ),
     )
@@ -332,7 +334,7 @@ class CTASectionAdmin(SingletonAdmin):
             {
                 "description": "The final 'Ready to Ride?' section near the bottom of the website, "
                 "with its own heading, description, button and photo.",
-                "fields": ("heading", "description", "button_text", "button_link", "image"),
+                "fields": ("eyebrow", "heading", "description", "button_text", "button_link", "image"),
             },
         ),
     )
@@ -348,8 +350,25 @@ class FooterLinkAdmin(admin.ModelAdmin):
             None,
             {
                 "description": "Links shown in the website footer, grouped into columns "
-                "(Quick Links, Ride Options, Support).",
+                "(Quick Links, Ride Options).",
                 "fields": ("group_name", "label", "url", "display_order"),
+            },
+        ),
+    )
+
+
+@admin.register(FAQ)
+class FAQAdmin(admin.ModelAdmin):
+    list_display = ("question", "display_order")
+    list_editable = ("display_order",)
+    search_fields = ("question", "answer")
+    fieldsets = (
+        (
+            None,
+            {
+                "description": "Frequently asked questions shown in an expandable list just above "
+                "the footer.",
+                "fields": ("question", "answer", "display_order"),
             },
         ),
     )

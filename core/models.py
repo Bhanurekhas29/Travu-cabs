@@ -99,7 +99,9 @@ class HeroSection(SingletonModel):
     )
     heading_line2 = models.CharField(
         max_length=100,
-        help_text="Second line of the heading, shown in the highlight colour. e.g. Your Way.",
+        blank=True,
+        help_text="Second line of the heading, shown in the highlight colour. e.g. Your Way. "
+        "Leave blank to show only the first line.",
     )
     subtext = models.TextField(
         blank=True, help_text="Short paragraph under the heading explaining what you offer."
@@ -151,6 +153,11 @@ class SectionHeading(models.Model):
         choices=SectionKey.choices,
         unique=True,
         help_text="Which section on the website this heading belongs to.",
+    )
+    eyebrow = models.CharField(
+        max_length=100,
+        blank=True,
+        help_text="Small label shown above the heading, usually in caps. e.g. The Journey Starts Here",
     )
     heading = models.CharField(max_length=150, help_text="The heading text shown above this section.")
     subtext = models.CharField(
@@ -421,6 +428,11 @@ class HowItWorksStep(models.Model):
 
 
 class WhyChooseUsSection(SingletonModel):
+    eyebrow = models.CharField(
+        max_length=100,
+        blank=True,
+        help_text="Small label shown above the heading, usually in caps. e.g. Why Choose Travu",
+    )
     heading = models.CharField(
         max_length=150, blank=True, help_text="Heading for the 'why choose us' section."
     )
@@ -460,8 +472,16 @@ class WhyChooseUsFeature(models.Model):
 
 
 class JourneyBanner(SingletonModel):
+    eyebrow = models.CharField(
+        max_length=100,
+        blank=True,
+        help_text="Small label shown above the heading, usually in caps. e.g. Where Will The Road Take You?",
+    )
     heading = models.CharField(
         max_length=150, blank=True, help_text="Heading shown over the journey banner photo."
+    )
+    description = models.TextField(
+        blank=True, help_text="Short paragraph shown under the heading."
     )
     background_image = models.ImageField(
         upload_to="journey_banner/",
@@ -492,6 +512,12 @@ class SafetySection(SingletonModel):
     badge_text = models.CharField(
         max_length=50, blank=True, help_text="Small highlight label shown on the photo. e.g. Safety, every mile"
     )
+    button_text = models.CharField(
+        max_length=50, blank=True, help_text="Text on the button below the safety points. e.g. Travel With Confidence"
+    )
+    button_link = models.CharField(
+        max_length=200, blank=True, help_text="Where the button goes to. Ask the developer if unsure."
+    )
 
     class Meta:
         verbose_name = "Safety Section"
@@ -503,7 +529,13 @@ class SafetySection(SingletonModel):
 
 class SafetyPoint(models.Model):
     title = models.CharField(
-        max_length=100, help_text="Short safety point shown with a checkmark. e.g. Driver Verification"
+        max_length=100, help_text="Short safety point shown with a checkmark. e.g. Trusted Drivers"
+    )
+    description = models.CharField(
+        max_length=200,
+        blank=True,
+        help_text="One line explaining this point. e.g. Professional drivers focused on safe and "
+        "responsible travel. Leave blank to show just the title.",
     )
     display_order = models.PositiveIntegerField(
         default=0, help_text="Controls the order these show in. Lower numbers show first."
@@ -519,6 +551,11 @@ class SafetyPoint(models.Model):
 
 
 class CTASection(SingletonModel):
+    eyebrow = models.CharField(
+        max_length=100,
+        blank=True,
+        help_text="Small label shown above the heading. e.g. One Click. One Ride. One More Journey.",
+    )
     heading = models.CharField(
         max_length=150, blank=True, help_text="Heading for the closing call-to-action section. e.g. Ready to Ride?"
     )
@@ -564,3 +601,19 @@ class FooterLink(models.Model):
 
     def __str__(self):
         return f"[{self.get_group_name_display()}] {self.label}"
+
+
+class FAQ(models.Model):
+    question = models.CharField(max_length=200, help_text="The question, as a customer would ask it.")
+    answer = models.TextField(help_text="The answer shown when the question is expanded.")
+    display_order = models.PositiveIntegerField(
+        default=0, help_text="Controls the order these show in. Lower numbers show first."
+    )
+
+    class Meta:
+        verbose_name = "FAQ"
+        verbose_name_plural = "FAQs"
+        ordering = ["display_order"]
+
+    def __str__(self):
+        return self.question

@@ -90,7 +90,7 @@ function validate(form, selectedVehicle, selectedGroup) {
   return errors;
 }
 
-function BookingForm({ preselectedVehicle }) {
+function BookingForm({ preselectedVehicle, prefillRoute }) {
   const [vehicleTypes, setVehicleTypes] = useState([]);
   const [form, setForm] = useState(INITIAL_FORM);
   const [errors, setErrors] = useState({});
@@ -131,6 +131,16 @@ function BookingForm({ preselectedVehicle }) {
     );
     setErrors((prev) => ({ ...prev, passengers: undefined }));
   }, [preselectedVehicle]);
+
+  useEffect(() => {
+    if (!prefillRoute) return;
+    setForm((prev) => ({
+      ...prev,
+      pickup_location: prefillRoute.pickup || prev.pickup_location,
+      destination: prefillRoute.destination || prev.destination,
+    }));
+    setErrors((prev) => ({ ...prev, pickup_location: undefined, destination: undefined }));
+  }, [prefillRoute]);
 
   const handleGroupSelect = (group) => {
     setForm((prev) => {

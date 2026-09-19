@@ -4,6 +4,7 @@ from .models import (
     BookingEnquiry,
     ContactMessage,
     CTASection,
+    FAQ,
     FooterLink,
     HeroSection,
     HowItWorksStep,
@@ -20,6 +21,7 @@ from .serializers import (
     BookingEnquirySerializer,
     ContactMessageSerializer,
     CTASectionSerializer,
+    FAQSerializer,
     FooterLinkSerializer,
     HeroSectionSerializer,
     HowItWorksStepSerializer,
@@ -114,3 +116,8 @@ class BookingEnquiryCreateView(generics.CreateAPIView):
 class ContactMessageCreateView(generics.CreateAPIView):
     queryset = ContactMessage.objects.all()
     serializer_class = ContactMessageSerializer
+
+
+class FAQListView(generics.ListAPIView):
+    queryset = FAQ.objects.all()
+    serializer_class = FAQSerializer

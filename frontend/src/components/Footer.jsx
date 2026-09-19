@@ -33,6 +33,7 @@ function Footer() {
               <span className="footer__logo-text">{siteSettings?.brand_name || "Travu"}</span>
             )}
           </a>
+          {siteSettings?.tagline && <p className="footer__tagline">{siteSettings.tagline}</p>}
           {siteSettings?.address && (
             <>
               <h4 className="footer__address-heading">Address</h4>

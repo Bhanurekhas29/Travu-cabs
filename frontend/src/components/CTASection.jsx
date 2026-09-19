@@ -18,7 +18,7 @@ function CTASection() {
       <div className="container">
         <div className="cta-section__card">
           <div className="cta-section__content">
-            <p className="cta-section__eyebrow">Your Next Ride Is Closer Than You Think</p>
+            {cta.eyebrow && <p className="cta-section__eyebrow">{cta.eyebrow}</p>}
             <h2 className="cta-section__heading">{cta.heading}</h2>
             {cta.description && <p className="cta-section__description">{cta.description}</p>}
             {cta.button_text && (

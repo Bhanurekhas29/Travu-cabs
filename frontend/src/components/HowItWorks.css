@@ -5,7 +5,7 @@
 
 .how-it-works__heading {
   text-align: center;
-  max-width: 640px;
+  max-width: 760px;
   margin: 0 auto 40px;
 }
 
@@ -20,7 +20,7 @@
 }
 
 .how-it-works__heading h2 {
-  font-size: 1.8rem;
+  font-size: 1.6rem;
 }
 
 /* Hairline-divider grid: the container's border-color background shows
@@ -92,7 +92,8 @@
 
 @media (min-width: 768px) {
   .how-it-works__heading h2 {
-    font-size: 2.2rem;
+    font-size: 2rem;
+    white-space: nowrap;
   }
 
   .how-it-works__grid {
